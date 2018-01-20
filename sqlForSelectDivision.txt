@@ -1,0 +1,9 @@
+SELECT a.* FROM
+(select d.name as departmenName 
+from t_department d INNER JOIN t_user_department_set ud ON d.ID = ud.DEPARTMENTID INNER JOIN t_user u on u.id = ud.USERID INNER JOIN t_user_role_set ur on u.ID = ur.USERID INNER JOIN t_role r on r.ID = ur.ROLEID
+WHERE d.`NAME` like '%事业部' AND d.LEVELS = '4' AND d.INDEXCODE like '%760d5ff3-136f-445f-b9df-f01d0943a9e0%' and r.`NAME` = '事业部负责人'
+UNION ALL
+select d.name as departmenName 
+from t_department d 
+WHERE d.`NAME` like '%事业部%' AND d.LEVELS = '4' AND d.INDEXCODE like '%760d5ff3-136f-445f-b9df-f01d0943a9e0%'
+) as a GROUP BY a.departmenName HAVING COUNT(a.departmenName)=1

@@ -1,0 +1,9 @@
+SELECT a.* FROM
+(select d.name as departmenName 
+from t_department d INNER JOIN t_user_department_set ud ON d.ID = ud.DEPARTMENTID INNER JOIN t_user u on u.id = ud.USERID INNER JOIN t_user_role_set ur on u.ID = ur.USERID INNER JOIN t_role r on r.ID = ur.ROLEID
+where d.superior='a78820c4-d6db-491b-bcfd-1e476a21a9c5' AND r.`NAME` = '产品公司负责人'
+UNION ALL
+select d.name as departmenName
+from t_department d
+where d.superior='a78820c4-d6db-491b-bcfd-1e476a21a9c5'
+) as a GROUP BY a.departmenName HAVING COUNT(a.departmenName)=1
